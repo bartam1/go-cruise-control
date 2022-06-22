@@ -104,7 +104,7 @@ func (c Client) request(req interface{}, resp types.APIResponse, e types.APIEndp
 	}(httpResp.Body)
 
 	c.log.V(0).Info("got response for request", "url", httpResp.Request.URL,
-		"status", httpResp.StatusCode)
+		"status", httpResp.StatusCode, "body", httpResp.Body)
 
 	contentType := parseContentType(httpResp.Header.Get(HTTPHeaderContentType))
 	if contentType.MIMEType != MIMETypeJSON && contentType.ChartSet != ChartSetUTF8 {
