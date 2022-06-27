@@ -101,10 +101,12 @@ func (c Client) request(req interface{}, resp types.APIResponse, e types.APIEndp
 		if err != nil {
 			c.log.V(-1).Info("failed to close response body for request", "url", httpResp.Request.URL)
 		}
+		c.log.Info("got response for request", "url", httpResp.Request.URL,
+			"status", httpResp.StatusCode, "body", httpResp.Body, "header", httpResp.Header)
 	}(httpResp.Body)
 
 	c.log.V(0).Info("got response for request", "url", httpResp.Request.URL,
-		"status", httpResp.StatusCode, "body", httpResp.Body)
+		"status", httpResp.StatusCode, "body", httpResp.Body, "header", httpResp.Header)
 
 	contentType := parseContentType(httpResp.Header.Get(HTTPHeaderContentType))
 	if contentType.MIMEType != MIMETypeJSON && contentType.ChartSet != ChartSetUTF8 {
